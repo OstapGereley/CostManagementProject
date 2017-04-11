@@ -27,6 +27,9 @@ namespace CostManagementProject
         public MainWindow()
         {            
             InitializeComponent();
+
+            new TestModule().Run();
+
             YearStats.Add(new YearGrowth(1, 1, 1, 1, 1, 1, 1, 1));
             YearsCount = YearStats.Count;
             YearGrowthGrid.ItemsSource = YearStats;
