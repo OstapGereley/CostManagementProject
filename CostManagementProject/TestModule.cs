@@ -28,13 +28,22 @@ namespace CostManagementProject
             }
         }
 
-      
+        private class FahnerPairCriterium
+        {
+            public Criterium FirstCriterium { get; set; }
+
+            public Criterium SecondCriterium { get; set; }
+
+            public int Value { get; set; }
+        }
+
 
         class YearGrowsCriteries
         {
             public YearGrowsCriteries()
             {
                 Criteriums = new List<Criterium>();
+                FahnerPairCriteriums = new List<FahnerPairCriterium>();
             }
 
             public double Year { get; set; }
@@ -53,7 +62,15 @@ namespace CostManagementProject
                 return sum;
             }
 
+            public List<FahnerPairCriterium> FahnerPairCriteriums { get; set; }
+
+            public int FehnerSum { get; set; }
+
+            public double FehnerKoef { get; set; }
+
             public double SpirmanKoef { get; set; }
+
+            public double ScaleLevel { get; set; }
             
              
         }
@@ -71,6 +88,35 @@ namespace CostManagementProject
             
             CalculateSpirman(yearsCriterieses);//table 6
 
+           
+            for (int i = 1; i < yearsCriterieses.Count; ++i)
+            {
+                var yearTable = yearsCriterieses[i];
+
+                var criteriums = yearsCriterieses[i].Criteriums.OrderBy(x=>x.StandardRank).ToList();
+
+                for (int j = 0; j < criteriums.Count; ++j)
+                {
+                    for (int k = j + 1; k < criteriums.Count; ++k)
+                    {
+                        FahnerPairCriterium fahnerPairCriterium = new FahnerPairCriterium();
+                        fahnerPairCriterium.FirstCriterium = criteriums[j];
+                        fahnerPairCriterium.SecondCriterium = criteriums[k];
+
+                        fahnerPairCriterium.Value = fahnerPairCriterium.FirstCriterium.Rate.CompareTo(fahnerPairCriterium.SecondCriterium.Rate);
+                        if (fahnerPairCriterium.Value == 0)
+                            fahnerPairCriterium.Value = 1;
+
+                        yearTable.FahnerPairCriteriums.Add(fahnerPairCriterium);
+                    }
+                }
+
+                yearTable.FehnerSum = yearTable.FahnerPairCriteriums.Sum(x => x.Value);
+                yearTable.FehnerKoef = yearTable.FehnerSum/(double)yearTable.FahnerPairCriteriums.Count;
+
+                yearTable.ScaleLevel = ((1 + yearTable.SpirmanKoef)*(1 + yearTable.FehnerKoef))/(2*2);
+
+            }
         }
 
         private static void CalculateSpirman(List<YearGrowsCriteries> yearsCriterieses)
