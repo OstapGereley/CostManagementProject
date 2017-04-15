@@ -9,77 +9,11 @@ namespace CostManagementProject
 {
     class TestModule
     {
-
-        class Criterium
+        public List<YearGrowthCriteries> Run(List<YearGrowth> yearGrowths)
         {
-            public int Id { get; set; }
+            //List<YearGrowth> yearGrowths = GetYearGrowths();//table 1-3
 
-            public double Value { get; set; }
-
-            public double Rate { get; set; }
-
-            public int StandardRank { get; set; }
-
-            public int Rank { get; set; }
-
-            public double GetRankDeviation()//квадрат рангових відхилень
-            {
-                return Math.Pow(Rank - StandardRank, 2);
-            }
-        }
-
-        private class FahnerPairCriterium
-        {
-            public Criterium FirstCriterium { get; set; }
-
-            public Criterium SecondCriterium { get; set; }
-
-            public int Value { get; set; }
-        }
-
-
-        class YearGrowsCriteries
-        {
-            public YearGrowsCriteries()
-            {
-                Criteriums = new List<Criterium>();
-                FahnerPairCriteriums = new List<FahnerPairCriterium>();
-            }
-
-            public double Year { get; set; }
-
-            public List<Criterium> Criteriums { get; set; }
-
-            public double GetCriteriumsDeviationsSum()//сума квадратів рангових відхилень
-            {
-                double sum = 0;
-
-                foreach (var criterium in Criteriums)
-                {
-                    sum += criterium.GetRankDeviation();
-                }
-
-                return sum;
-            }
-
-            public List<FahnerPairCriterium> FahnerPairCriteriums { get; set; }
-
-            public int FehnerSum { get; set; }
-
-            public double FehnerKoef { get; set; }
-
-            public double SpirmanKoef { get; set; }
-
-            public double ScaleLevel { get; set; }
-            
-             
-        }
-
-        public void Run()
-        {
-            List<YearGrowth> yearGrowths = GetYearGrowths();//table 1-3
-
-            List<YearGrowsCriteries> yearsCriterieses = GetYearsGrowsCriterieses(yearGrowths);//table 3 formatted
+            List<YearGrowthCriteries> yearsCriterieses = GetYearsGrowsCriterieses(yearGrowths);//table 3 formatted
 
             yearsCriterieses = GetYearsGrowthRateCriteries(yearsCriterieses);//table 4
 
@@ -117,9 +51,11 @@ namespace CostManagementProject
                 yearTable.ScaleLevel = ((1 + yearTable.SpirmanKoef)*(1 + yearTable.FehnerKoef))/(2*2);
 
             }
+
+            return yearsCriterieses;
         }
 
-        private static void CalculateSpirman(List<YearGrowsCriteries> yearsCriterieses)
+        private static void CalculateSpirman(List<YearGrowthCriteries> yearsCriterieses)
         {
             for (var i = 1; i < yearsCriterieses.Count; ++i)
             {
@@ -131,7 +67,7 @@ namespace CostManagementProject
             }
         }
 
-        private static List<YearGrowsCriteries> getYearsRanks(List<YearGrowsCriteries> yearsCriterieses)
+        private static List<YearGrowthCriteries> getYearsRanks(List<YearGrowthCriteries> yearsCriterieses)
         {
             for (int i = 1; i < yearsCriterieses.Count; ++i)
             {
@@ -147,7 +83,7 @@ namespace CostManagementProject
         }
 
 
-        private static List<YearGrowsCriteries> GetYearsGrowthRateCriteries(List<YearGrowsCriteries> yearsGrowsCriterieses)
+        private static List<YearGrowthCriteries> GetYearsGrowthRateCriteries(List<YearGrowthCriteries> yearsGrowsCriterieses)
         {
           
             for (int i = 1; i < yearsGrowsCriterieses.Count; ++i)
@@ -170,12 +106,12 @@ namespace CostManagementProject
             return yearsGrowsCriterieses;
         }
 
-        private static List<YearGrowsCriteries> GetYearsGrowsCriterieses(List<YearGrowth> yearGrowths)
+        private static List<YearGrowthCriteries> GetYearsGrowsCriterieses(List<YearGrowth> yearGrowths)
         {
-            List<YearGrowsCriteries> yearsGrowsCriterieses = new List<YearGrowsCriteries>();
+            List<YearGrowthCriteries> yearsGrowsCriterieses = new List<YearGrowthCriteries>();
             foreach (var yearGrowth in yearGrowths)
             {
-                yearsGrowsCriterieses.Add(new YearGrowsCriteries()
+                yearsGrowsCriterieses.Add(new YearGrowthCriteries()
                 {
                     Year = yearGrowth.Year,
                     Criteriums = new List<Criterium>()

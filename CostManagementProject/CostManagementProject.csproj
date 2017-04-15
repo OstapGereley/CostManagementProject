@@ -72,6 +72,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Models\CompanyScale.cs" />
+    <Compile Include="Models\FahnerPairCriterium.cs" />
+    <Compile Include="Models\Criterium.cs" />
+    <Compile Include="Models\FehnerCompare.cs" />
+    <Compile Include="Models\YearGrowthCriteria.cs" />
     <Compile Include="TestModule.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
