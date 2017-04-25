@@ -1,29 +1,28 @@
-﻿<Window x:Class="CostManagementProject.MainWindow"
+﻿<Controls:MetroWindow x:Class="CostManagementProject.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         xmlns:local="clr-namespace:CostManagementProject"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         mc:Ignorable="d"
-        Title="MainWindow" Height="400" Width="700"
+        Title="Діагностика розвитку підприємства" Height="400" Width="825"
         TextOptions.TextFormattingMode="Display">
+    <Controls:MetroWindow.Resources>
+        <Style x:Key="MenuLevel2" BasedOn="{StaticResource MetroTabItem}" TargetType="{x:Type TabItem}">
+            <Setter Property="Controls:ControlsHelper.HeaderFontSize" Value="18"></Setter>
+        </Style>
+    </Controls:MetroWindow.Resources>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="25" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
-        <Menu Grid.Row="0" HorizontalAlignment="Left"  VerticalAlignment="Top" >
-            <MenuItem Header="File">
-                <MenuItem Header="Exit"/>
-            </MenuItem>
-        </Menu>
-
-        <TabControl Grid.Row="1">
-            <TabItem Header="Основні індикатори">
+        <TabControl >
+            <TabItem Header="Основні індикатори" Style="{StaticResource MenuLevel2}">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="25" />
@@ -32,8 +31,8 @@
                     <StackPanel Orientation="Horizontal">
                         <Label Margin="5,0,5,0">Кількість років</Label>
                         <Label Margin="0,0,5,0" Name="ElementsCountLabel" Content="{Binding YearsCount}"></Label>
-                        <Button Height="20" Width="20" Click="AddButtonClick">+</Button>
-                        <Button Height="20" Width="20" Click="SubButtonClick">-</Button>
+                        <Button Height="20" Width="20" Click="AddButtonClick" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">+</Button>
+                        <Button Height="20" Width="20" Click="SubButtonClick" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">-</Button>
                         <Button Height="20" Margin="4,0,4,0" Click="ClearButtonClick">Очистити</Button>
                         <Button Height="20" Margin="0,0,4,0" Click="CalculateButtonClick">Розрахувати</Button>
                     </StackPanel>
@@ -93,7 +92,7 @@
                 </Grid>
             </TabItem>
 
-            <TabItem Header="Темпи зростання">
+            <TabItem Header="Темпи зростання" Style="{StaticResource MenuLevel2}">
                 <DataGrid Name="YearGrowthCriteriaGrid"
                           RowHeight="75"
                               AutoGenerateColumns="False">
@@ -149,7 +148,7 @@
                 </DataGrid>
             </TabItem>
 
-            <TabItem Header="Рейтингова оцінка темпів зростання">
+            <TabItem Header="Рейтингова оцінка темпів зростання" Style="{StaticResource MenuLevel2}">
                 <DataGrid Name="YearGrowthRateGrid"
                           RowHeight="75"
                               AutoGenerateColumns="False">
@@ -205,7 +204,7 @@
                 </DataGrid>
             </TabItem>
 
-            <TabItem Header="Рангові відхилення та кореляція Спірмана">
+            <TabItem Header="Рангові відхилення та кореляція Спірмана" Style="{StaticResource MenuLevel2}">
                 <DataGrid Name="YearSpirmanGrid"
                           RowHeight="75"
                               AutoGenerateColumns="False">
@@ -263,7 +262,7 @@
                 </DataGrid>
             </TabItem>
 
-            <TabItem Header="Коефіцієнти збігів Фехнера">
+            <TabItem Header="Коефіцієнти збігів Фехнера" Style="{StaticResource MenuLevel2}">
                 <DataGrid Name="FehnerGrid"
                           RowHeight="75"
                               AutoGenerateColumns="False">
@@ -335,7 +334,7 @@
                 </DataGrid>
             </TabItem>
 
-            <TabItem Header="Рівні масштабності розвитку">
+            <TabItem Header="Рівні масштабності розвитку" Style="{StaticResource MenuLevel2}">
                 <DataGrid   Name="ScaleRateGrid"                      
                            AutoGenerateColumns="False">
                     <DataGrid.CellStyle>
@@ -362,4 +361,4 @@
         </TabControl>
 
     </Grid>
-</Window>
+</Controls:MetroWindow>

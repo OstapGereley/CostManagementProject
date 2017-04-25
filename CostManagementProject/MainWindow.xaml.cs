@@ -1,6 +1,7 @@
 ﻿using CostManagementProject.Models;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using MahApps.Metro.Controls;
 using System.Windows;
 using System.Linq;
 using System;
@@ -10,7 +11,7 @@ namespace CostManagementProject
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MainWindow 
     {
         public ObservableCollection<YearGrowth> YearStats = new ObservableCollection<YearGrowth>();
         public ObservableCollection<YearGrowth> YearGrowthCriteriaStats = new ObservableCollection<YearGrowth>();
@@ -119,6 +120,9 @@ namespace CostManagementProject
 
         private void SubButtonClick(object sender, RoutedEventArgs e)
         {
+            if (YearsCount == 1)
+                return;
+
             YearsCount--;
             YearStats.RemoveAt(YearStats.Count - 1);
         }
@@ -136,6 +140,9 @@ namespace CostManagementProject
 
         private void CalculateButtonClick(object sender, RoutedEventArgs e)
         {
+            if (YearStats.ToList().Count == 0)
+                return;
+
             var calcsList = new TestModule().Run(YearStats.ToList());
             calcsList.RemoveAt(0);
 
